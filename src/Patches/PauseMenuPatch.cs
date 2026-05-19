@@ -14,7 +14,7 @@ namespace QuickReload;
 [HarmonyPatch(typeof(NPauseMenu), nameof(NPauseMenu._Ready))]
 static class QuickReloadPauseMenuPatch
 {
-    private const string QuickReloadNodeName = "QuickReload_QuickReloadButton";
+    internal const string QuickReloadNodeName = "QuickReload_QuickReloadButton";
     private static readonly LocString RestartLoc = new("gameplay_ui", "PAUSE_MENU.RESTART");
 
     static void Postfix(NPauseMenu __instance)
@@ -115,5 +115,22 @@ static class QuickReloadPauseMenuPatch
     {
         Log.Info("[QUICKRELOAD]: Quick Restart pressed.");
         TaskHelper.RunSafely(QuickReloadRunner.RestartAsync(pauseMenu));
+    }
+}
+
+[HarmonyPatch(typeof(NPauseMenu), "CloseToMenu")]
+static class CloseToMenuPatch
+{
+    static void Prefix(NPauseMenu __instance)
+    {
+        var restartButton = __instance.GetNodeOrNull<VBoxContainer>("PanelContainer/ButtonContainer")
+                ?.GetNodeOrNull<NPauseMenuButton>(QuickReloadPauseMenuPatch.QuickReloadNodeName);
+
+        if (restartButton == null || !GodotObject.IsInstanceValid(restartButton))
+        {
+            return;
+        }
+
+        restartButton.Disable();
     }
 }
