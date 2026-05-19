@@ -12,15 +12,15 @@
 
     <!-- macOS -->
     <PropertyGroup>
-        <SteamLibraryPath Condition="'$(SteamLibraryPath)' == ''">$(HOME)/Library/Application Support/Steam/steamapps</SteamLibraryPath>
-        <GodotPath Condition="'$(GodotPath)' == ''">/Applications/Godot_mono.app/Contents/MacOS/Godot</GodotPath>
+        <SteamLibraryPath Condition="'$(SteamLibraryPath)' == ''">D:\Games\Steam\steamapps</SteamLibraryPath>
+        <GodotPath Condition="'$(GodotPath)' == ''">D:\WorkSpace\Megadot\MegaDot_v4.5.1-stable_mono_win64.exe</GodotPath>
 
         <!-- The below should not need to be changed. -->
-        <Sts2Path>$(SteamLibraryPath)/common/Slay the Spire 2</Sts2Path>
-        <ModsPath>$(Sts2Path)/SlayTheSpire2.app/Contents/MacOS/mods/</ModsPath>
-        <Sts2DataDir>$(Sts2Path)/SlayTheSpire2.app/Contents/Resources/data_sts2_macos_x86_64</Sts2DataDir>
+        <Sts2Path>$(SteamLibraryPath)\common\Slay the Spire 2</Sts2Path>
+        <ModsPath>$(Sts2Path)\mods\</ModsPath>
+        <Sts2DataDir>$(Sts2Path)\data_sts2_windows_x86_64</Sts2DataDir>
 
-        <SteamworksNetPath Condition="'$(SteamworksNetPath)' == ''">$(Sts2DataDir)/Steamworks.NET.dll</SteamworksNetPath>
+        <SteamworksNetPath Condition="'$(SteamworksNetPath)' == ''">$(Sts2DataDir)\Steamworks.NET.dll</SteamworksNetPath>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -39,7 +39,7 @@
             <HintPath>$(Sts2DataDir)/sts2.dll</HintPath>
             <Private>false</Private>
         </Reference>
-        <AdditionalFiles Include="QuickReload/localization/**/*.json"/>
+        <AdditionalFiles Include="QuickReload-MS/localization/**/*.json"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -58,7 +58,7 @@
     <Target Name="CopyToModsFolderOnBuild" AfterTargets="PostBuildEvent">
         <Message Text="Copying .dll and manifest to mods folder." Importance="high"/>
         <Copy SourceFiles="$(ModDllDeploySource)" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/"/>
-        <Copy SourceFiles="QuickReload.json" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/"/>
+        <Copy SourceFiles="QuickReload-MS.json" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/"/>
     </Target>
 
     <Target Name="GodotPublish" AfterTargets="Publish" Condition="'$(GodotPath)' != '' and Exists('$(GodotPath)') and '$(IsInnerGodotExport)' != 'true'">
