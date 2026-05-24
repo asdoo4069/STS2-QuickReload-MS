@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Reflection;
 using Godot;
 using HarmonyLib;
@@ -8,8 +7,6 @@ using MegaCrit.Sts2.Core.Multiplayer.Game.Lobby;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
 using MegaCrit.Sts2.Core.Nodes.Screens.CharacterSelect;
-using MegaCrit.Sts2.Core.Nodes.Screens.CustomRun;
-using MegaCrit.Sts2.Core.Nodes.Screens.DailyRun;
 
 namespace QuickReload;
 
@@ -20,8 +17,12 @@ static class AutoReadyPatch
     {
         yield return AccessTools.Method(typeof(NMultiplayerLoadGameScreen),
             nameof(NMultiplayerLoadGameScreen.OnSubmenuOpened));
-        yield return AccessTools.Method(typeof(NDailyRunLoadScreen), nameof(NDailyRunLoadScreen.OnSubmenuOpened));
-        yield return AccessTools.Method(typeof(NCustomRunLoadScreen), nameof(NCustomRunLoadScreen.OnSubmenuOpened));
+        var dailyRunType = AccessTools.TypeByName("MegaCrit.Sts2.Core.Nodes.Screens.DailyRun.NDailyRunLoadScreen");
+        if (dailyRunType != null)
+            yield return AccessTools.Method(dailyRunType, "OnSubmenuOpened");
+        var customRunType = AccessTools.TypeByName("MegaCrit.Sts2.Core.Nodes.Screens.CustomRun.NCustomRunLoadScreen");
+        if (customRunType != null)
+            yield return AccessTools.Method(customRunType, "OnSubmenuOpened");
     }
 
     static void Postfix(object __instance)

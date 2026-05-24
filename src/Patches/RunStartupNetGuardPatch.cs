@@ -2,8 +2,6 @@ using System.Reflection;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Nodes.Screens.CharacterSelect;
-using MegaCrit.Sts2.Core.Nodes.Screens.CustomRun;
-using MegaCrit.Sts2.Core.Nodes.Screens.DailyRun;
 using MegaCrit.Sts2.Core.Runs;
 
 namespace QuickReload;
@@ -16,9 +14,9 @@ static class RunStartupNetGuardBeginRunPatch
         var screenTypes = new[]
         {
             typeof(NMultiplayerLoadGameScreen),
-            typeof(NDailyRunLoadScreen),
-            typeof(NCustomRunLoadScreen)
-        };
+            AccessTools.TypeByName("MegaCrit.Sts2.Core.Nodes.Screens.DailyRun.NDailyRunLoadScreen"),
+            AccessTools.TypeByName("MegaCrit.Sts2.Core.Nodes.Screens.CustomRun.NCustomRunLoadScreen")
+        }.Where(t => t != null).ToArray();
 
         foreach (var screenType in screenTypes)
         {
@@ -46,11 +44,11 @@ static class RunStartupNetGuardProcessPatch
     static IEnumerable<MethodBase> TargetMethods()
     {
         var screenTypes = new[]
-        {
+         {
             typeof(NMultiplayerLoadGameScreen),
-            typeof(NDailyRunLoadScreen),
-            typeof(NCustomRunLoadScreen)
-        };
+            AccessTools.TypeByName("MegaCrit.Sts2.Core.Nodes.Screens.DailyRun.NDailyRunLoadScreen"),
+            AccessTools.TypeByName("MegaCrit.Sts2.Core.Nodes.Screens.CustomRun.NCustomRunLoadScreen")
+        }.Where(t => t != null).ToArray();
 
         foreach (var screenType in screenTypes)
         {
@@ -75,11 +73,11 @@ static class RunStartupNetGuardSubmenuClosedPatch
     static IEnumerable<MethodBase> TargetMethods()
     {
         var screenTypes = new[]
-        {
+         {
             typeof(NMultiplayerLoadGameScreen),
-            typeof(NDailyRunLoadScreen),
-            typeof(NCustomRunLoadScreen)
-        };
+            AccessTools.TypeByName("MegaCrit.Sts2.Core.Nodes.Screens.DailyRun.NDailyRunLoadScreen"),
+            AccessTools.TypeByName("MegaCrit.Sts2.Core.Nodes.Screens.CustomRun.NCustomRunLoadScreen")
+        }.Where(t => t != null).ToArray();
 
         foreach (var screenType in screenTypes)
         {

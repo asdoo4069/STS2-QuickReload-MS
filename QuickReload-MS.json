@@ -1,6 +1,6 @@
 {
     "id": "QuickReload-MS",
-    "name": "Quick Reload (MS)",
+    "name": "Quick Reload-MS",
     "author": "Minsu",
     "description": "Fast run reload from the pause menu, including multiplayer support. F5 hotkey.",
     "version": "1.0.5",
