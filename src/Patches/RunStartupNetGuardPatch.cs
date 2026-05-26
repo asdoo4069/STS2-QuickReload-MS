@@ -3,6 +3,8 @@ using HarmonyLib;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Nodes.Screens.CharacterSelect;
 using MegaCrit.Sts2.Core.Runs;
+using MegaCrit.Sts2.Core.Nodes.Screens.DailyRun;
+using MegaCrit.Sts2.Core.Nodes.Screens.CustomRun;
 
 namespace QuickReload;
 
@@ -11,20 +13,13 @@ static class RunStartupNetGuardBeginRunPatch
 {
     static IEnumerable<MethodBase> TargetMethods()
     {
-        var screenTypes = new[]
-        {
-            typeof(NMultiplayerLoadGameScreen),
-            AccessTools.TypeByName("MegaCrit.Sts2.Core.Nodes.Screens.DailyRun.NDailyRunLoadScreen"),
-            AccessTools.TypeByName("MegaCrit.Sts2.Core.Nodes.Screens.CustomRun.NCustomRunLoadScreen")
-        }.Where(t => t != null).ToArray();
+        var screenTypes = QuickReloadUtil.IsMobilePlatform()
+            ? new[] { typeof(NMultiplayerLoadGameScreen) }
+            : new[] { typeof(NMultiplayerLoadGameScreen), typeof(NDailyRunLoadScreen), typeof(NCustomRunLoadScreen) };
 
         foreach (var screenType in screenTypes)
         {
-            var beginRun = AccessTools.Method(screenType, nameof(NMultiplayerLoadGameScreen.BeginRun));
-            if (beginRun != null)
-            {
-                yield return beginRun;
-            }
+            yield return AccessTools.Method(screenType, nameof(NMultiplayerLoadGameScreen.BeginRun));
         }
     }
 
@@ -43,20 +38,13 @@ static class RunStartupNetGuardProcessPatch
 {
     static IEnumerable<MethodBase> TargetMethods()
     {
-        var screenTypes = new[]
-         {
-            typeof(NMultiplayerLoadGameScreen),
-            AccessTools.TypeByName("MegaCrit.Sts2.Core.Nodes.Screens.DailyRun.NDailyRunLoadScreen"),
-            AccessTools.TypeByName("MegaCrit.Sts2.Core.Nodes.Screens.CustomRun.NCustomRunLoadScreen")
-        }.Where(t => t != null).ToArray();
+        var screenTypes = QuickReloadUtil.IsMobilePlatform()
+            ? new[] { typeof(NMultiplayerLoadGameScreen) }
+            : new[] { typeof(NMultiplayerLoadGameScreen), typeof(NDailyRunLoadScreen), typeof(NCustomRunLoadScreen) };
 
         foreach (var screenType in screenTypes)
         {
-            var process = AccessTools.Method(screenType, nameof(NMultiplayerLoadGameScreen._Process));
-            if (process != null)
-            {
-                yield return process;
-            }
+            yield return AccessTools.Method(screenType, nameof(NMultiplayerLoadGameScreen._Process));
         }
     }
 
@@ -72,20 +60,13 @@ static class RunStartupNetGuardSubmenuClosedPatch
 {
     static IEnumerable<MethodBase> TargetMethods()
     {
-        var screenTypes = new[]
-         {
-            typeof(NMultiplayerLoadGameScreen),
-            AccessTools.TypeByName("MegaCrit.Sts2.Core.Nodes.Screens.DailyRun.NDailyRunLoadScreen"),
-            AccessTools.TypeByName("MegaCrit.Sts2.Core.Nodes.Screens.CustomRun.NCustomRunLoadScreen")
-        }.Where(t => t != null).ToArray();
+        var screenTypes = QuickReloadUtil.IsMobilePlatform()
+            ? new[] { typeof(NMultiplayerLoadGameScreen) }
+            : new[] { typeof(NMultiplayerLoadGameScreen), typeof(NDailyRunLoadScreen), typeof(NCustomRunLoadScreen) };
 
         foreach (var screenType in screenTypes)
         {
-            var closed = AccessTools.Method(screenType, nameof(NMultiplayerLoadGameScreen.OnSubmenuClosed));
-            if (closed != null)
-            {
-                yield return closed;
-            }
+            yield return AccessTools.Method(screenType, nameof(NMultiplayerLoadGameScreen.OnSubmenuClosed));
         }
     }
 

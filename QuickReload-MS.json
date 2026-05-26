@@ -3,7 +3,7 @@
     "name": "Quick Reload-MS",
     "author": "Minsu",
     "description": "Fast run reload from the pause menu, including multiplayer support. F5 hotkey.",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "has_pck": true,
     "has_dll": true,
     "dependencies": [],
