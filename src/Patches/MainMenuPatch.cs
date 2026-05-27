@@ -1,5 +1,4 @@
 using HarmonyLib;
-using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Multiplayer.Connection;
@@ -25,6 +24,27 @@ static class QuickReloadMainMenuPatch
             QuickReloadState.SetAutoReady(true);
             __instance.OpenMultiplayerSubmenu().OnJoinFriendsPressed();
             Log.Info("[QUICKRELOAD]: Using fastmp quick-restart join flow via Join Friends screen.");
+            return;
+        }
+
+        if (QuickReloadUtil.IsMobilePlatform())
+        {
+            Log.Info("[QUICKRELOAD]: Detected mobile platform, using mobile quick-restart join flow.");
+
+            var hostIp = QuickReloadState.GetPendingHostIp();
+            Log.Info($"[QUICKRELOAD]: hostIp={hostIp}");
+
+            if (string.IsNullOrEmpty(hostIp))
+            {
+                Log.Warn("[QUICKRELOAD]: hostIp is empty, aborting mobile reconnect.");
+                return;
+            }
+
+            var submenu = __instance.OpenMultiplayerSubmenu();
+            var joinScreen = submenu.OnJoinFriendsPressed();
+            QuickReloadState.SetAutoReady(true);
+            var initializer = new ENetClientConnectionInitializer(1000, hostIp, 33771); // netId 하드코딩
+            TaskHelper.RunSafely(joinScreen.JoinGameAsync(initializer));
             return;
         }
 

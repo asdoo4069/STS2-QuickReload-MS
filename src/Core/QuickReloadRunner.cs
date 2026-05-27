@@ -114,8 +114,9 @@ static class QuickReloadRunner
         {
             ulong playerId = CommandLineHelper.HasArg("fastmp") ? 1003 : Steamworks.SteamUser.GetSteamID().m_SteamID;
 
-            netService.SendMessage(new QuickReloadMessage { playerId = playerId });
-            Log.Info($"[QUICKRELOAD]: Sent QuickReloadMessage before cleanup. playerId={playerId}");
+            var hostIp = "100.94.7.31"; // TODO: ModConfig로 교체 예정
+            netService.SendMessage(new QuickReloadMessage { playerId = playerId, hostIp = hostIp });
+            Log.Info($"[QUICKRELOAD]: Sent QuickReloadMessage before cleanup. playerId={playerId}, hostIp={hostIp}");
         }
         else
         {
