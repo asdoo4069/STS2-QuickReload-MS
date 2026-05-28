@@ -15,6 +15,7 @@ namespace QuickReload;
 static class QuickReloadPauseMenuPatch
 {
     internal const string QuickReloadNodeName = "QuickReload_QuickReloadButton";
+    internal const string ButtonContainerPath = "PanelContainer/ButtonContainer";
     private static readonly LocString RestartLoc = new("gameplay_ui", "PAUSE_MENU.RESTART");
 
     static void Postfix(NPauseMenu __instance)
@@ -25,7 +26,7 @@ static class QuickReloadPauseMenuPatch
             return;
         }
 
-        var buttonContainer = __instance.GetNodeOrNull<VBoxContainer>("PanelContainer/ButtonContainer");
+        var buttonContainer = __instance.GetNodeOrNull<VBoxContainer>(ButtonContainerPath);
         if (buttonContainer == null)
         {
             Log.Warn("[QUICKRELOAD]: Quick Restart: couldn't find button container.");
@@ -123,7 +124,7 @@ static class CloseToMenuPatch
 {
     static void Prefix(NPauseMenu __instance)
     {
-        var restartButton = __instance.GetNodeOrNull<VBoxContainer>("PanelContainer/ButtonContainer")
+        var restartButton = __instance.GetNodeOrNull<VBoxContainer>(QuickReloadPauseMenuPatch.ButtonContainerPath)
                 ?.GetNodeOrNull<NPauseMenuButton>(QuickReloadPauseMenuPatch.QuickReloadNodeName);
 
         if (restartButton == null || !GodotObject.IsInstanceValid(restartButton))

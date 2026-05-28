@@ -169,24 +169,30 @@ static class QuickReloadRunner
 
     private static void DisablePauseMenuButtons(NPauseMenu pauseMenu)
     {
-        var buttonContainer = pauseMenu.GetNode<VBoxContainer>("PanelContainer/ButtonContainer");
-        foreach (var button in buttonContainer.GetChildren())
-        {
-            if (button is NPauseMenuButton pauseMenuButton)
-            {
-                pauseMenuButton.Disable();
-            }
-        }
+        SetPauseMenuButtonsEnabled(pauseMenu, false);
     }
 
     private static void EnablePauseMenuButtons(NPauseMenu pauseMenu)
     {
-        var buttonContainer = pauseMenu.GetNode<VBoxContainer>("PanelContainer/ButtonContainer");
+        SetPauseMenuButtonsEnabled(pauseMenu, true);
+    }
+
+    private static void SetPauseMenuButtonsEnabled(NPauseMenu pauseMenu, bool enabled)
+    {
+        var buttonContainer = pauseMenu.GetNode<VBoxContainer>(QuickReloadPauseMenuPatch.ButtonContainerPath);
+
         foreach (var button in buttonContainer.GetChildren())
         {
             if (button is NPauseMenuButton pauseMenuButton)
             {
-                pauseMenuButton.Enable();
+                if (enabled)
+                {
+                    pauseMenuButton.Enable();
+                }
+                else
+                {
+                    pauseMenuButton.Disable();
+                }
             }
         }
     }
