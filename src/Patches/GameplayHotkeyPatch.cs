@@ -1,4 +1,3 @@
-using System.Threading;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Helpers;
