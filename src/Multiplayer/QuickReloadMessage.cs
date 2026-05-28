@@ -9,7 +9,6 @@ public struct QuickReloadMessage :
     IPacketSerializable
 {
     public ulong playerId;
-    public string hostIp;
 
     public bool ShouldBroadcast => true;
 
@@ -20,17 +19,15 @@ public struct QuickReloadMessage :
     public void Serialize(PacketWriter writer)
     {
         writer.WriteULong(playerId);
-        writer.WriteString(hostIp);
     }
 
     public void Deserialize(PacketReader reader)
     {
         this.playerId = reader.ReadULong();
-        this.hostIp = reader.ReadString();
     }
 
     public override string ToString()
     {
-        return $"[QUICKRELOAD]: QuickReloadMessage: playerId={playerId}, hostIp={hostIp}";
+        return $"[QUICKRELOAD]: QuickReloadMessage: playerId={playerId}";
     }
 }

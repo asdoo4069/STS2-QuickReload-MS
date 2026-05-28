@@ -10,12 +10,10 @@
         <RootNamespace>QuickReload</RootNamespace>
     </PropertyGroup>
 
-    <!-- macOS -->
     <PropertyGroup>
         <SteamLibraryPath Condition="'$(SteamLibraryPath)' == ''">D:\Games\Steam\steamapps</SteamLibraryPath>
         <GodotPath Condition="'$(GodotPath)' == ''">D:\WorkSpace\Megadot\MegaDot_v4.5.1-stable_mono_win64.exe</GodotPath>
 
-        <!-- The below should not need to be changed. -->
         <Sts2Path>$(SteamLibraryPath)\common\Slay the Spire 2</Sts2Path>
         <ModsPath>$(Sts2Path)\mods\</ModsPath>
         <Sts2DataDir>$(Sts2Path)\data_sts2_windows_x86_64</Sts2DataDir>
@@ -69,4 +67,8 @@
     <Target Name="GodotPublishSkipped" AfterTargets="Publish" Condition="'$(GodotPath)' == '' or !Exists('$(GodotPath)')">
         <Message Text="Skipping Godot .pck export because GodotPath is not configured." Importance="high"/>
     </Target>
+
+    <!-- <Target Name="CopyToAndroid" AfterTargets="GodotPublish">
+        <Exec Command="&quot;D:\Utility\platform-tools\adb.exe&quot; push &quot;$(ModsPath)$(MSBuildProjectName)&quot; /storage/emulated/0/StS2LauncherMM/Mods/" />
+    </Target> -->
 </Project>
