@@ -64,7 +64,7 @@ static class AutoReadyPatch
 
         var runLobby = GetRunLobby(screen);
 
-        const int maxFramesToWait = 600; // ~10s at 60fps.
+        const int maxFramesToWait = 1800; // ~30s at 60fps.
         for (var _ = 0; _ < maxFramesToWait; _++)
         {
             if (!GodotObject.IsInstanceValid(node) || !GodotObject.IsInstanceValid(confirm))

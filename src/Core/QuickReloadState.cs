@@ -9,24 +9,14 @@ internal static class QuickReloadState
     private static bool _pendingAutoReady;
     private static bool _pendingRunStartupNetGuard;
     private static bool _runStartupNetGuardActive;
-    private static string _pendingHostIp = "";
 
-    public static void SetPendingRestart(ulong playerId, string hostIp = "")
+    public static void SetPendingRestart(ulong playerId)
     {
         lock (Sync)
         {
             _pendingRestart = true;
             _pendingPlayerId = playerId;
-            _pendingHostIp = hostIp;
             _pendingAutoReady = false;
-        }
-    }
-
-    public static string GetPendingHostIp()
-    {
-        lock (Sync)
-        {
-            return _pendingHostIp;
         }
     }
 

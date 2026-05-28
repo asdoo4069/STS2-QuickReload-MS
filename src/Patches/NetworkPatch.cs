@@ -31,7 +31,7 @@ static class QuickReloadNetworkPatch
             return;
         }
 
-        QuickReloadState.SetPendingRestart(message.playerId, message.hostIp);
+        QuickReloadState.SetPendingRestart(message.playerId);
         Log.Info("[QUICKRELOAD]: QuickReload pending state set for client.");
     }
 }

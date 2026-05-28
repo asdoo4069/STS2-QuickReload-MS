@@ -1,3 +1,4 @@
+using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Logging;
@@ -31,8 +32,11 @@ static class QuickReloadMainMenuPatch
         {
             Log.Info("[QUICKRELOAD]: Detected mobile platform, using mobile quick-restart join flow.");
 
-            var hostIp = QuickReloadState.GetPendingHostIp();
-            Log.Info($"[QUICKRELOAD]: hostIp={hostIp}");
+            // 모바일 런처가 마지막으로 접속한 호스트 IP를 저장해둔 파일에서 읽어옴
+            var config = new ConfigFile();
+            var hostIp = config.Load("user://lan_last_ip.cfg") == Error.Ok
+                ? (string)config.GetValue("lan", "last_ip", "")
+                : "";
 
             if (string.IsNullOrEmpty(hostIp))
             {
