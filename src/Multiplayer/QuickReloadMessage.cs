@@ -10,13 +10,15 @@ public struct QuickReloadMessage :
 {
     public ulong playerId;
 
-    public bool ShouldBroadcast => true;
+    public readonly bool ShouldBroadcast => true;
 
-    public NetTransferMode Mode => NetTransferMode.Reliable;
+    public readonly NetTransferMode Mode => NetTransferMode.Reliable;
 
-    public LogLevel LogLevel => LogLevel.VeryDebug;
+    public readonly LogLevel LogLevel => LogLevel.VeryDebug;
 
-    public void Serialize(PacketWriter writer)
+    public readonly bool ShouldBuffer => true;
+
+    public readonly void Serialize(PacketWriter writer)
     {
         writer.WriteULong(playerId);
     }
@@ -26,7 +28,7 @@ public struct QuickReloadMessage :
         this.playerId = reader.ReadULong();
     }
 
-    public override string ToString()
+    public override readonly string ToString()
     {
         return $"[QUICKRELOAD]: QuickReloadMessage: playerId={playerId}";
     }

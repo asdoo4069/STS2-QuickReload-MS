@@ -80,14 +80,14 @@ static class RunStartupNetGuardSubmenuClosedPatch
 [HarmonyPatch]
 static class RunStartupNetGuardRunManagerPatch
 {
-    [HarmonyPatch(typeof(RunManager), nameof(RunManager.SetUpSavedMultiPlayer))]
+    [HarmonyPatch(typeof(RunManager), nameof(RunManager.SetUpSavedMultiplayer))]
     [HarmonyPostfix]
     static void OnSetUpSavedMultiPlayerPostfix()
     {
         TryClearGuard("SetUpSavedMultiPlayer");
     }
 
-    [HarmonyPatch(typeof(RunManager), nameof(RunManager.SetUpNewMultiPlayer))]
+    [HarmonyPatch(typeof(RunManager), nameof(RunManager.SetUpNewMultiplayer))]
     [HarmonyPostfix]
     static void OnSetUpNewMultiPlayerPostfix()
     {

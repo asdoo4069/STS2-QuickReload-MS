@@ -25,7 +25,7 @@ static class QuickReloadRunner
 
     public static async Task RestartAsync(NPauseMenu? pauseMenu)
     {
-        if (RunManager.Instance.IsSinglePlayerOrFakeMultiplayer)
+        if (RunManager.Instance.IsSingleplayerOrFakeMultiplayer)
         {
             Log.Info("[QUICKRELOAD]: Single player run detected, restarting.");
             if (pauseMenu != null)
@@ -84,7 +84,7 @@ static class QuickReloadRunner
 
         try
         {
-            RunManager.Instance.SetUpSavedSinglePlayer(runState, serializableRun);
+            await RunManager.Instance.SetUpSavedSingleplayer(runState, serializableRun);
             SfxCmd.Play(runState.Players[0].Character.CharacterTransitionSfx);
             game.ReactionContainer.InitializeNetworking((INetGameService)new NetSingleplayerGameService());
             await game.LoadRun(runState, serializableRun.PreFinishedRoom);
