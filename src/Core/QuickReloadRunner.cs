@@ -122,8 +122,14 @@ static class QuickReloadRunner
         var mainMenu = NMainMenu.Create(false);
         game.RootSceneContainer.SetCurrentScene(mainMenu);
 
+
+        // LAN 분기
+        if (LanMultiplayerBridge.TryRestartAsLanHost(mainMenu))
+            return false;
+
         NMultiplayerSubmenu? multiplayerSubmenu = mainMenu.OpenMultiplayerSubmenu();
 
+        // Steam/fastmp 분기
         var platformType = !SteamInitializer.Initialized || CommandLineHelper.HasArg("fastmp")
             ? PlatformType.None
             : PlatformType.Steam;

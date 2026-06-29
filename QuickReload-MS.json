@@ -3,9 +3,10 @@
     "name": "Quick Reload-MS",
     "author": "Minsu",
     "description": "일시정지 메뉴 또는 F5 단축키를 통한 빠른 재시작. 멀티플레이어 지원.",
-    "version": "1.0.9",
+    "version": "1.1.0",
     "has_pck": true,
     "has_dll": true,
     "dependencies": [],
-    "affects_gameplay": true
+    "affects_gameplay": true,
+    "min_game_version": "0.107.1"
 }
