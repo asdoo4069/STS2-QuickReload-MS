@@ -14,7 +14,7 @@ namespace QuickReload;
 internal static class LanMultiplayerBridge
 {
     private const string AssemblyName = "LanMultiplayer-MS";
-    private const string RootNamespace = "SlayTheSpire2.LAN.Multiplayer.Reforged";
+    private const string RootNamespace = "LanMultiplayerMS";
 
     private static readonly Type? LanRunSaveManagerServiceType =
         Type.GetType($"{RootNamespace}.Services.LanRunSaveManagerService, {AssemblyName}");
